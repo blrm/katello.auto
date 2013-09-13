@@ -197,6 +197,7 @@
   "Deletes a subscription manifest uploaded"
   [manifest]
   (nav/go-to ::subs/new-page (kt/provider manifest))
+  (wd/move-to browser/*driver* (browser/element ::subs/delete-manifest))
   (browser/click ::subs/delete-manifest)
   (browser/click ::ui/confirmation-yes))
 

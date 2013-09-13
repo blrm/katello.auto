@@ -61,6 +61,7 @@
   "Deletes the given activation key."
   [ak]
   (nav/go-to ak)
+  (wd/move-to browser/*driver* (browser/element ::remove-link))
   (browser/click ::remove-link)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :ak-destroy))

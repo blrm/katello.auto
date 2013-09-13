@@ -36,7 +36,7 @@
         ::confirm-only-group    "//span[.='No, only delete the system group.']"
         ::unlimited-checkbox    "//input[@class='unlimited_members']"
         ::save-new-limit        "//button[.='Save']"
-        ::limit-value           {:name "system_group[max_systems]"}}
+        ::limit-value           "//input[@name='system_group[max_systems]']"}
        )
 
 ;; Nav
@@ -100,6 +100,7 @@
    group as well."
   [{:keys [also-remove-systems?] :as group}]
   (nav/go-to group)
+  (wd/move-to browser/*driver* (browser/element ::remove))
   (browser/click ::remove)
   (browser/click ::ui/confirmation-yes)
   (browser/click (if also-remove-systems?

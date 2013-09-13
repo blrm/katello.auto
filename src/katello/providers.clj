@@ -102,16 +102,18 @@
   [{:keys [provider] :as product}]
    {:pre [(not-empty provider)
           (instance? katello.Product product)]}
-  (nav/go-to product)
-  (browser/click ::remove-product)
-  (browser/click ::ui/confirmation-yes)
-  (notification/success-type :prod-destroy))
+   (nav/go-to product)
+   (wd/move-to browser/*driver* (browser/element ::remove-product))
+   (browser/click ::remove-product)
+   (browser/click ::ui/confirmation-yes)
+   (notification/success-type :prod-destroy))
 
 (defn- delete
   "Deletes the named custom provider."
   [provider]
   {:pre [(instance? katello.Provider provider)]}
   (nav/go-to provider)
+  (wd/move-to browser/*driver* (browser/element ::remove-provider-link))
   (browser/click ::remove-provider-link)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :prov-destroy))

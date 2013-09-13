@@ -354,6 +354,7 @@
   "Deletes an existing View Definition."
   [content-defn]
   (nav/go-to content-defn)
+  (wd/move-to browser/*driver* (browser/element ::remove))
   (browser/click ::remove)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :cv-destroy))

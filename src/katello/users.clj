@@ -92,6 +92,7 @@
 (defn- delete "Deletes the given user."
   [user]
   (nav/go-to user)
+  (wd/move-to browser/*driver* (browser/element ::remove))
   (browser/click ::remove)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :users-destroy))

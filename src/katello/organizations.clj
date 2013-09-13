@@ -119,6 +119,7 @@
   "Deletes an organization."
   [org]
   (nav/go-to org)
+  (wd/move-to browser/*driver* (browser/element ::remove))
   (browser/click ::remove)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :org-destroy) ;queueing success

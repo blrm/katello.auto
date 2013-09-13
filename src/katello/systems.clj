@@ -151,6 +151,7 @@
 (defn- delete "Deletes the selected system."
   [system]
   (nav/go-to system)
+  (wd/move-to browser/*driver* (browser/element ::remove))
   (browser/click ::remove)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :sys-destroy))

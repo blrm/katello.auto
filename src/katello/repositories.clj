@@ -75,6 +75,7 @@
   [repo]
   {:pre [(instance? katello.Repository repo)]}
   (nav/go-to repo)
+  (wd/move-to browser/*driver* (browser/element ::remove-repository))
   (browser/click ::remove-repository)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :repo-destroy))

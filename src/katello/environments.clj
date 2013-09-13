@@ -52,7 +52,8 @@
   [env]
   (nav/go-to env)
   (if (browser/exists? ::remove-link)
-    (browser/click ::remove-link)
+    (do (wd/move-to browser/*driver* (browser/element ::remove-link))
+        (browser/click ::remove-link))
     (throw+ {:type ::cant-be-deleted :env env}))
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :env-destroy))

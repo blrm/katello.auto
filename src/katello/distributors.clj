@@ -93,6 +93,7 @@
   [dist]
   {:pre [(instance? katello.Distributor dist)]}
   (nav/go-to dist)
+  (wd/move-to browser/*driver* (browser/element ::remove-link))
   (browser/click ::remove-link)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :distributor-destroy))

@@ -53,6 +53,7 @@
   "Deletes existing GPG keys"
   [gpg-key]
   (nav/go-to gpg-key)
+  (wd/move-to browser/*driver* (browser/element ::remove-link))
   (browser/click ::remove-link )
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :gpg-keys-destroy))

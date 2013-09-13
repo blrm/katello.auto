@@ -140,6 +140,7 @@
   "Deletes the given role."
   [role]
   (nav/go-to role)
+  (wd/move-to browser/*driver* (browser/element ::remove))
   (browser/click ::remove)
   (browser/click ::ui/confirmation-yes)
   (notification/success-type :roles-destroy))

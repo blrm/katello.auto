@@ -185,7 +185,11 @@
         (rest/create-all (list g1 g2 s))
         (-> g1
             (ui/update assoc :systems #{s})
+            ((fn [x]
+               (browser/wait-until #(not (browser/visible? ::ui/notification-container)) 5000 1000)
+               x))
             (ui/update update-in [:systems] disj s))
+        (browser/wait-until #(not (browser/visible? ::ui/notification-container)) 5000 1000)
         (ui/update g2 assoc :systems #{s})))
 
     (deftest "Reduce the max-limit after associating systems to max allowed limit"
@@ -194,6 +198,7 @@
                     [s1 s2] (some-system)]
         (rest/create-all (list g s1 s2))
         (ui/update g assoc :systems #{s1 s2})
+        (browser/wait-until #(not (browser/visible? ::ui/notification-container)) 5000 1000)
         (expecting-error (common/errtype ::notif/systems-exceeds-group-limit)
                          (ui/update g assoc :limit 1))))
 
@@ -216,6 +221,7 @@
                     ak (kt/newActivationKey {:name "ak", :env (kt/env s)})]
         (rest/create-all (list g s))
         (ui/create ak) ;; Temp fix, looks like (rest/create ak) is buggy, need to raise a bug.
+        (browser/wait-until #(not (browser/visible? ::ui/notification-container)) 5000 1000)
         (ui/update g assoc :systems #{s})
         (ui/update ak assoc :system-group g)
         (provision/with-queued-client ssh-conn
