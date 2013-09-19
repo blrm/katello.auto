@@ -110,7 +110,8 @@
                        (elements other# ~deployment)))))
 
 (defelements :katello.deployment/any []
-  {::save-inplace-edit       "//div[contains(@class, 'editable')]//button[@type='submit']|//span[contains(@class, 'editable')]//button[@type='submit']"
+  {::save-inplace-edit       {:tag :button :type "submit"}
+   ::save-inplace-edit-span  "//span[contains(@class, 'editable')]//button[@type='submit']"
    ::confirmation-dialog     "//div[contains(@class, 'confirmation')]"
 
    ;; use index, no other identifiable info in the DOM

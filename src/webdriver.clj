@@ -105,8 +105,8 @@ Default browser-spec: firefox"
          ~body))))
 
 (defn move-to
-  [driver loc]
-  (clj-web/move-to-element driver loc))
+  ([loc] (move-to browser/*driver* loc))
+  ([driver loc] clj-web/move-to-element driver (browser/element loc)))
 
 (defn move-off
   [driver loc]
@@ -155,3 +155,15 @@ Default browser-spec: firefox"
       ~@body
       (finally
         (quit)))))
+
+
+
+
+
+
+
+
+
+
+
+

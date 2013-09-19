@@ -250,6 +250,7 @@
         (rest/create s)
         (ui/create g)
         (ui/update g assoc :systems #{s})
+        (Thread/sleep 2000)
         (group/copy g (update-in g [:name] #(str % "-clone"))))
         
       (deftest "Delete a copied system group"

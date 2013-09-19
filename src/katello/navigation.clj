@@ -5,7 +5,8 @@
             [slingshot.slingshot :refer [throw+ try+]]
             [clj-webdriver.taxi :as browser]
             [webdriver :as wd])
-  (:import [org.openqa.selenium NoSuchElementException]))
+  (:import [org.openqa.selenium NoSuchElementException]
+           [org.openqa.selenium.interactions MoveTargetOutOfBoundsException]))
 
 (defn environment-breadcrumb
   "Locates a link in the environment breadcrumb UI widget. If there
@@ -71,6 +72,9 @@
      (let [loc (templ (:name entity))]
        (try (browser/click loc)
             (catch NoSuchElementException se
+              (do (search-here (format "\"%s\"" (:name entity)))
+                  (browser/click loc)))
+            (catch MoveTargetOutOfBoundsException se
               (do (search-here (format "\"%s\"" (:name entity)))
                   (browser/click loc)))))))
 

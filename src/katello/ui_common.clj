@@ -70,8 +70,9 @@
   (doall (for [[loc val] items]
            (if-not (nil? val)
              (do (activate-in-place loc)
-                 (browser/clear (input-loc loc))
-                 (browser/input-text (input-loc loc) val)
+                 (browser/clear (textfield-loc loc))
+                 (browser/input-text (textfield-loc loc) val)
+                 (wd/ajax-wait)
                  (browser/click ::ui/save-inplace-edit)
                  (notification/check-for-success))))))
 

@@ -20,6 +20,7 @@
         ::create                "group_save"
         ::name-text             {:name "system_group[name]"}
         ::description-text      {:name "system_group[description]"}
+        ::description-text-area {:tag "textarea" :name "system_group[description]"}
         ::systems-link          (ui/third-level-link "system_groups_systems")
         ::details-link          (ui/third-level-link "system_group_details")
         ::hostname-toadd        "add_system_input"
@@ -89,10 +90,13 @@
    description will be taken for the clone)."
   [orig clone]
   (nav/go-to orig)
+  (wd/ajax-wait)
+  (wd/move-to ::copy)
   (browser/click ::copy)
-  (browser/quick-fill-submit {::copy-name-text (:name clone)}
-                             {::copy-description-text (:description clone)}
-                             {::copy-submit browser/click})
+  (browser/input-text ::copy-name-text (:name clone))
+  (when-let [d (:description clone)]
+    (browser/input-text ::copy-description-text))
+  (browser/click ::copy-submit)
   (notification/success-type :sysgrps-copy))
 
 (defn- remove
@@ -123,8 +127,9 @@
                                      {::save-new-limit browser/click}))
       (browser/click ::unlimited-checkbox))
     (when needed-flipping (notification/success-type :sysgrps-update)))
-  (common/in-place-edit {::name-text name
-                         ::description-text description}))
+  (when (or name description)
+    (common/in-place-edit {::name-text name
+                           ::description-text description})))
 
 (defn system-count
   "Get number of systems in system group according to the UI"
@@ -160,3 +165,27 @@
 
   tasks/Uniqueable tasks/entity-uniqueable-impl
   nav/Destination {:go-to (partial nav/go-to ::named-page)})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
