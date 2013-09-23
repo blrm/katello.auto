@@ -48,9 +48,9 @@
                      "version" "9"
                      "nativeEvents" false}])
 
-(def empty-browser-config {"browserName" "firefox"
-                           "platform" "LINUX"
-                           "version" "21"
+(def empty-browser-config {"browserName" "internet explorer"
+                           "platform" "VISTA"
+                           "version" "9"
                            "nativeEvents" false})
 (defn new-remote-grid
   "Returns a remote grid server. See new-remote-driver."
@@ -99,7 +99,7 @@
   (browser/new-driver (or browser-config-opts empty-browser-config)))
 
 (defn start-selenium [& [{:keys [browser-config-opts]}]]  
-  (browser/set-driver! {:browser :chrome} )
+  (browser/set-driver!(or browser-config-opts empty-browser-config))
   (browser/set-finder! wd/locator-finder-fn)
   (browser/implicit-wait 100)
   (browser/to (@config :server-url))
@@ -171,7 +171,7 @@
                              (job/update-id  sauce-name
                                              sauce-key
                                              s-id {:name (:name t)
-                                                   :build 47
+                                                   :build 53
                                                    :tags [(:version (rest/get-version))]
                                                    :passed true})))))
               :onfail (watch/on-fail
@@ -182,7 +182,7 @@
                                              sauce-key
                                              s-id {:name (:name t)
                                                    :tags [(:version (rest/get-version))]
-                                                   :build 47
+                                                   :build 53
                                                    :passed false
                                                    :custom-data {"throwable" (pr-str (:throwable (:error (:report e))))
                                                                  "stacktrace" (-> e :report :error :stack-trace java.util.Arrays/toString)}})))))}})
